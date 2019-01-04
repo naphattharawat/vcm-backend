@@ -14,21 +14,21 @@ const jwt = new Jwt();
 
 const router: Router = Router();
 
-router.post('/customer', async (req: Request, res: Response) => {
+router.post('/', async (req: Request, res: Response) => {
   let username: string = req.body.username;
   let password: string = req.body.password;
 
   let db = req.db;
 
   try {
-    let encPassword = crypto.createHash('md5').update(password).digest('hex');
-    let rs: any = await loginModel.doCustomerLogin(db, username, encPassword);
+    // let encPassword = crypto.createHash('md5').update(password).digest('hex');
+    let rs: any = await loginModel.doCustomerLogin(db, username, password);
 
     if (rs.length) {
 
       let payload = {
-        fullname: `${rs[0].first_name} ${rs[0].last_name}`,
-        id: rs[0].customer_id,
+        fullname: `${rs[0].name} ${rs[0].lname}`,
+        id: rs[0].user_id,
         type: 'customer'
       }
 
