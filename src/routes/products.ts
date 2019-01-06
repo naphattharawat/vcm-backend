@@ -56,6 +56,31 @@ router.post('/save', async (req: Request, res: Response) => {
 
 });
 
+router.put('/save', async (req: Request, res: Response) => {
+  try {
+    const data = req.body.data;
+    const productId = req.body.productId;
+    const db = req.db;
+    await productModel.update(db, productId, data);
+    res.send({ ok: true });
+  } catch (error) {
+    res.send({ ok: false, error: error });
+  }
+
+});
+
+router.delete('/', async (req: Request, res: Response) => {
+  try {
+    const productId = req.query.productId;
+    const db = req.db;
+    await productModel.delete(db, productId);
+    res.send({ ok: true });
+  } catch (error) {
+    res.send({ ok: false, error: error });
+  }
+
+});
+
 router.post('/search', async (req: Request, res: Response) => {
   try {
     const limit = req.body.limit;
@@ -65,6 +90,19 @@ router.post('/search', async (req: Request, res: Response) => {
     const rs = await productModel.productListSearch(db, limit, offset, query);
     const rsTotal = await productModel.productListSearchTotal(db, query);
     res.send({ ok: true, rows: rs, total: rsTotal[0].total });
+
+  } catch (error) {
+    res.send({ ok: false, error: error });
+  }
+
+});
+
+router.get('/info', async (req: Request, res: Response) => {
+  try {
+    const productId = req.query.productId;
+    const db = req.db;
+    const rs = await productModel.info(db, productId);
+    res.send({ ok: true, rows: rs[0] });
 
   } catch (error) {
     res.send({ ok: false, error: error });

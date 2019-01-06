@@ -4,11 +4,13 @@ export class Product {
   productList(db: Knex, limit: number, offset: number) {
     return db('product')
       .limit(limit).offset(offset)
+      .where('status', 1);
   }
 
   productListTotal(db: Knex) {
     return db('product')
-      .count('* as total');
+      .count('* as total')
+      .where('status', 1);
   }
 
   productListSearch(db: Knex, limit: number, offset: number, query: string) {
@@ -18,7 +20,8 @@ export class Product {
         w.where('product_name_th', 'like', _query)
           .orWhere('product_name_en', 'like', _query)
       })
-      .limit(limit).offset(offset)
+      .where('status', 1)
+      .limit(limit).offset(offset);
   }
 
   productListSearchTotal(db: Knex, query: string) {
@@ -28,7 +31,8 @@ export class Product {
         w.where('product_name_th', 'like', _query)
           .orWhere('product_name_en', 'like', _query)
       })
-      .count('* as total');
+      .count('* as total')
+      .where('status', 1);
   }
 
   saveUpload(knex: Knex, data: any, productId) {
@@ -41,8 +45,24 @@ export class Product {
     return knex('product')
       .insert(data);
   }
+
+  update(knex: Knex, productId, data: any) {
+    return knex('product')
+      .update(data)
+      .where('product_id', productId);
+  }
   getFiles(knex: Knex, productId) {
     return knex('product')
+      .where('product_id', productId);
+  }
+  info(knex: Knex, productId) {
+    return knex('product')
+      .where('product_id', productId);
+  }
+
+  delete(knex: Knex, productId) {
+    return knex('product')
+      .update({ 'status': 0 })
       .where('product_id', productId);
   }
 }
