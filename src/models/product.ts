@@ -31,4 +31,18 @@ export class Product {
       .count('* as total');
   }
 
+  saveUpload(knex: Knex, data: any, productId) {
+    return knex('product')
+      .update(data[0])
+      .where('product_id', productId);
+  }
+
+  save(knex: Knex, data: any) {
+    return knex('product')
+      .insert(data);
+  }
+  getFiles(knex: Knex, productId) {
+    return knex('product')
+      .where('product_id', productId);
+  }
 }
