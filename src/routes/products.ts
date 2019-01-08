@@ -13,7 +13,8 @@ import * as moment from 'moment';
 import * as fse from 'fs-extra';
 import * as multer from 'multer';
 
-const uploadDir = process.env.MMIS_DATA;
+const uploadDir = 'public';
+// const uploadDir = process.env.MMIS_DATA;
 
 fse.ensureDirSync(uploadDir);
 
@@ -30,6 +31,7 @@ var storage = multer.diskStorage({
 let upload = multer({ storage: storage })
 //
 const productModel = new Product();
+
 router.post('/', async (req: Request, res: Response) => {
   try {
     const limit = req.body.limit;
@@ -39,6 +41,8 @@ router.post('/', async (req: Request, res: Response) => {
     const rsTotal = await productModel.productListTotal(db);
     res.send({ ok: true, rows: rs, total: rsTotal[0].total });
   } catch (error) {
+    console.log(error);
+
     res.send({ ok: false, error: error });
   }
 
@@ -145,26 +149,26 @@ router.post('/image', upload.any(), (req: Request, res: Response) => {
   }
 });
 
-router.get('/info/:productId', upload.any(), (req, res, next) => {
-  let productId = req.params.productId;
-  let db = req.db;
-  productModel.getFiles(db, productId)
-    .then((rows) => {
-      let files: any = [];
-      rows.forEach(v => {
-        files.push({
-          product_id: v.product_id,
-          picture: v.picture,
-        });
-      })
-      res.send({ ok: true, rows: files });
-    })
-    .catch((error) => {
-      res.send({ ok: false, error: error });
-    })
-    .finally(() => {
-      db.destroy();
-    });
-});
+// router.get('/info/:productId', upload.any(), (req, res, next) => {
+//   let productId = req.params.productId;
+//   let db = req.db;
+//   productModel.getFiles(db, productId)
+//     .then((rows) => {
+//       let files: any = [];
+//       rows.forEach(v => {
+//         files.push({
+//           product_id: v.product_id,
+//           picture: v.picture,
+//         });
+//       })
+//       res.send({ ok: true, rows: files });
+//     })
+//     .catch((error) => {
+//       res.send({ ok: false, error: error });
+//     })
+//     .finally(() => {
+//       db.destroy();
+//     });
+// });
 
 export default router;

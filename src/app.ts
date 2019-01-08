@@ -60,8 +60,9 @@ let db = Knex({
       conn.query('SET NAMES utf8', (err) => {
         done(err, conn);
       });
-    }
+    },
   },
+  acquireConnectionTimeout: 5000
 });
 
 app.use((req: Request, res: Response, next: NextFunction) => {

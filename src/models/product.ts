@@ -51,10 +51,7 @@ export class Product {
       .update(data)
       .where('product_id', productId);
   }
-  getFiles(knex: Knex, productId) {
-    return knex('product')
-      .where('product_id', productId);
-  }
+
   info(knex: Knex, productId) {
     return knex('product')
       .where('product_id', productId);
