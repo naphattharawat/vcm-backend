@@ -13,7 +13,7 @@ import * as moment from 'moment';
 import * as fse from 'fs-extra';
 import * as multer from 'multer';
 
-const uploadDir = 'public';
+const uploadDir = 'public/uploads';
 // const uploadDir = process.env.MMIS_DATA;
 
 fse.ensureDirSync(uploadDir);
@@ -55,7 +55,7 @@ router.post('/save', async (req: Request, res: Response) => {
     const rs = await productModel.save(db, data);
     res.send({ ok: true, rows: rs });
   } catch (error) {
-    res.send({ ok: false, error: error });
+    res.send({ ok: false, error: error.message });
   }
 
 });
@@ -68,7 +68,7 @@ router.put('/save', async (req: Request, res: Response) => {
     await productModel.update(db, productId, data);
     res.send({ ok: true });
   } catch (error) {
-    res.send({ ok: false, error: error });
+    res.send({ ok: false, error: error.message });
   }
 
 });
@@ -127,6 +127,7 @@ router.post('/image', upload.any(), (req: Request, res: Response) => {
   files.forEach(v => {
     // let fileData = fs.readFileSync(v.path);
     // const path = v.path
+
     let obj = {
       picture: v.path,
     };
@@ -139,7 +140,7 @@ router.post('/image', upload.any(), (req: Request, res: Response) => {
         res.send({ ok: true, files: docs });
       })
       .catch((error) => {
-        res.send({ ok: false, error: error });
+        res.send({ ok: false, error: error.message });
       })
       .finally(() => {
         db.destroy();

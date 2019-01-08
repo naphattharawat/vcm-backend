@@ -36,8 +36,13 @@ export class Product {
   }
 
   saveUpload(knex: Knex, data: any, productId) {
+    const picture = data[0].picture.substr(7, data[0].picture.length - 7);
+    console.log(data[0].picture);
+
+    console.log('picture', picture);
+
     return knex('product')
-      .update(data[0])
+      .update({ 'picture': picture })
       .where('product_id', productId);
   }
 

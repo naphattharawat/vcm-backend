@@ -55,7 +55,7 @@ let db = Knex({
   connection: connection,
   pool: {
     min: 0,
-    max: 100,
+    max: 7,
     afterCreate: (conn, done) => {
       conn.query('SET NAMES utf8', (err) => {
         done(err, conn);
