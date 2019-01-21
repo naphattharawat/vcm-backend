@@ -20,6 +20,8 @@ import indexRoute from './routes/index';
 import loginRoute from './routes/login';
 import requestRoute from './routes/request';
 import productRoute from './routes/products';
+import machineRoute from './routes/machines';
+import receiveRoute from './routes/receives';
 // Assign router to the express.Router() instance
 const app: express.Application = express();
 
@@ -97,6 +99,8 @@ let checkAuth = (req: Request, res: Response, next: NextFunction) => {
 app.use('/login', loginRoute);
 app.use('/api', checkAuth, requestRoute);
 app.use('/products', checkAuth, productRoute);
+app.use('/machines', checkAuth, machineRoute);
+app.use('/receives', checkAuth, receiveRoute);
 app.use('/', indexRoute);
 
 //error handlers
