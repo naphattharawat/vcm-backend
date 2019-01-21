@@ -7,7 +7,7 @@ export class ReceiveModel {
       .join('supplier as s', 's.supplier_id', 'r.supplier_id')
       .limit(limit).offset(offset)
       // .where('r.is_deleted', 'N')
-      .orderBy('r.receive_id', 'DESC')
+      .orderBy('r.receive_code', 'DESC')
   }
 
   receiveListTotal(knex: Knex) {
@@ -34,7 +34,7 @@ export class ReceiveModel {
         // .orWhere('machine_name_en', 'like', _query)
       })
       // .where('r.is_deleted', 'N')
-      .orderBy('r.receive_id', 'DESC')
+      .orderBy('r.receive_code', 'DESC')
       .limit(limit).offset(offset);
   }
 

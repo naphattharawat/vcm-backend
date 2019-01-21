@@ -13,6 +13,16 @@ export class Product {
       .where('status', 1);
   }
 
+  productAutoComplete(db: Knex, query: string) {
+    const _query = `%${query}%`;
+    return db('product')
+      .where(w => {
+        w.where('product_name_th', 'like', _query)
+          .orWhere('product_name_en', 'like', _query)
+      })
+      .where('status', 1);
+  }
+
   productListSearch(db: Knex, limit: number, offset: number, query: string) {
     const _query = `%${query}%`;
     return db('product')

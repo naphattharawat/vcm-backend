@@ -98,7 +98,21 @@ router.post('/search', async (req: Request, res: Response) => {
   } catch (error) {
     res.send({ ok: false, error: error });
   }
+});
 
+router.get('/autocomplete', async (req: Request, res: Response) => {
+  try {
+    const query = req.query.q;
+    const db = req.db;
+    const rs = await productModel.productAutoComplete(db, query);
+    if(rs.length){
+      res.send(rs);
+    } else {
+      res.send([])
+    }
+  } catch (error) {
+    res.send([])
+  }
 });
 
 router.get('/info', async (req: Request, res: Response) => {
