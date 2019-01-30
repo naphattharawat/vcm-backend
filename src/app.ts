@@ -22,6 +22,9 @@ import requestRoute from './routes/request';
 import productRoute from './routes/products';
 import machineRoute from './routes/machines';
 import receiveRoute from './routes/receives';
+import labelerRoute from './routes/labelers';
+
+
 // Assign router to the express.Router() instance
 const app: express.Application = express();
 
@@ -101,6 +104,7 @@ app.use('/api', checkAuth, requestRoute);
 app.use('/products', checkAuth, productRoute);
 app.use('/machines', checkAuth, machineRoute);
 app.use('/receives', checkAuth, receiveRoute);
+app.use('/labelers', checkAuth, labelerRoute);
 app.use('/', indexRoute);
 
 //error handlers
