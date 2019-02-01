@@ -20,7 +20,8 @@ export class Product {
         w.where('product_name_th', 'like', _query)
           .orWhere('product_name_en', 'like', _query)
       })
-      .where('status', 1);
+      .where('status', 1)
+      .limit(20);
   }
 
   productListSearch(db: Knex, limit: number, offset: number, query: string) {

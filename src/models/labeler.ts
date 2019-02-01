@@ -8,6 +8,7 @@ export class LabelerModel {
         w.where('supplier_name', 'like', _query)
           .orWhere('note', 'like', _query)
       })
-      .where('status', 1);
+      .where('status', 1)
+      .limit(20);
   }
 }

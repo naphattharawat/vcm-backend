@@ -51,8 +51,13 @@ export class ReceiveModel {
   }
 
 
-  save(knex: Knex, data: any) {
+  saveHead(knex: Knex, data: any) {
     return knex('receives')
+      .insert(data);
+  }
+
+  saveDetail(knex: Knex, data: any) {
+    return knex('receive_details')
       .insert(data);
   }
 
