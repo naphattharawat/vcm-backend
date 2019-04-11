@@ -23,6 +23,7 @@ import productRoute from './routes/products';
 import machineRoute from './routes/machines';
 import receiveRoute from './routes/receives';
 import labelerRoute from './routes/labelers';
+import customerRoute from './routes/customers';
 
 
 // Assign router to the express.Router() instance
@@ -105,6 +106,7 @@ app.use('/products', checkAuth, productRoute);
 app.use('/machines', checkAuth, machineRoute);
 app.use('/receives', checkAuth, receiveRoute);
 app.use('/labelers', checkAuth, labelerRoute);
+app.use('/customers', checkAuth, customerRoute);
 app.use('/', indexRoute);
 
 //error handlers
