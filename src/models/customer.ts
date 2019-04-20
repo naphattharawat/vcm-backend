@@ -5,6 +5,48 @@ export class CustomerModel {
     return knex('customer')
       .orderBy('name', 'DESC')
   }
+  update(knex: Knex, customerId, data) {
+    return knex('customer')
+      .update(data)
+      .where('customer_id', customerId);
+  }
+  save(knex: Knex, data) {
+    return knex('customer')
+      .insert(data, 'customer_id');
+  }
+
+  removeTel(knex: Knex, customerId) {
+    return knex('customer_tel')
+      .where('customer_id', customerId)
+      .del();
+  }
+
+  saveTel(knex: Knex, data) {
+    return knex('customer_tel')
+      .insert(data);
+  }
+
+  removeFax(knex: Knex, customerId) {
+    return knex('customer_fax')
+      .where('customer_id', customerId)
+      .del();
+  }
+
+  saveFax(knex: Knex, data) {
+    return knex('customer_fax')
+      .insert(data);
+  }
+
+  removeContact(knex: Knex, customerId) {
+    return knex('customer_contact')
+      .where('customer_id', customerId)
+      .del();
+  }
+
+  saveContact(knex: Knex, data) {
+    return knex('customer_contact')
+      .insert(data);
+  }
 
   info(knex: Knex, customerId) {
     return knex('customer')
@@ -24,6 +66,17 @@ export class CustomerModel {
   getContact(knex: Knex, customerId) {
     return knex('customer_contact')
       .where('customer_id', customerId)
+  }
+
+  getMachine(knex: Knex, customerId) {
+    return knex('machines')
+      .where('customer_id', customerId)
+  }
+
+  removeMachine(knex: Knex, machineId) {
+    return knex('machines')
+      .update({ 'customer_id': null })
+      .where('machine_id', machineId)
   }
 
   // listTotal(knex: Knex) {

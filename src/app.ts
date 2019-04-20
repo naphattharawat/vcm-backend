@@ -24,6 +24,8 @@ import machineRoute from './routes/machines';
 import receiveRoute from './routes/receives';
 import labelerRoute from './routes/labelers';
 import customerRoute from './routes/customers';
+import userRoute from './routes/users';
+
 
 
 // Assign router to the express.Router() instance
@@ -94,7 +96,7 @@ let checkAuth = (req: Request, res: Response, next: NextFunction) => {
     }, err => {
       return res.send({
         ok: false,
-        error: HttpStatus.getStatusText(HttpStatus.UNAUTHORIZED),
+        error: 'Token หมดอายุ กรุณา login ใหม่',
         code: HttpStatus.UNAUTHORIZED
       });
     });
@@ -107,6 +109,7 @@ app.use('/machines', checkAuth, machineRoute);
 app.use('/receives', checkAuth, receiveRoute);
 app.use('/labelers', checkAuth, labelerRoute);
 app.use('/customers', checkAuth, customerRoute);
+app.use('/users', checkAuth, userRoute);
 app.use('/', indexRoute);
 
 //error handlers
